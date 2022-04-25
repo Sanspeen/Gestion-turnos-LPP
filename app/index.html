@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion de turnos</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>{{ titulo }}</h1>
+
+      Total de tareas: <b>{{contador}}</b>
+      <br>
+      <input type="text" v-model="nombreTarea" placeholder="Ingrese la tarea" />
+      <br />
+      <br />
+      <button @click="agregarTarea">Agregar Tarea</button>
+
+      <h3>Tareas pendientes</h3>
+      <div v-if="tareas.length==0">Sin tareas pendientes</div>
+      <ul v-else>
+        <li v-for="tarea in tareas">
+          <input type="checkbox" name="" id="" />
+          {{tarea}}
+        </li>
+      </ul>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="index.js"></script>
+    <script type="module">
+      import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+      const url_socket = "http://localhost:3000"
+      const socket = io(url_socket);
+      socket.on("bienvenido", (data)=>{
+        console.log(data);
+      })
+    </script>
+  </body>
+</html>
