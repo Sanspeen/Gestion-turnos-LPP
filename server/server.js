@@ -18,9 +18,18 @@ app.get("/",(req, res) =>{
     res.send("App tiempo real socket.io");
 });
 
+
+listOfUsers = [
+    {
+        nombre: "Santiago",
+        correo: "Franco@gmail.com",
+        turno: 1
+    }
+];
+
 io.on('connection', (socket) => {
     console.log("User connected: ", socket.id);
-    io.emit("bienvenido", {"mensaje":"Alguien se ha conectado"})
+    socket.emit("bienvenido", listOfUsers)
 });
 
 
