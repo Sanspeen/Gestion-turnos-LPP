@@ -41,9 +41,9 @@ const APP_VUE = {
         let arregloVacio = [];
         this.socket.emit("reiniciar", arregloVacio);
     },
-    actualizarTurno(turno){
-        console.log(turno);
-        this.socket.emit("actualizar-turno", turno);
+    eliminarTurno(turno){
+        console.log(turno.id);
+        this.socket.emit("eliminar-turno", turno);
     },
     agregarTurno() {
       const turno = {

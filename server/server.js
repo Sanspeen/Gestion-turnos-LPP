@@ -31,15 +31,15 @@ io.on('connection', (socket) => {
         io.emit("data-turnos", listOfUsers)
     })
 
-    socket.on("actualizar-turno", (turno)=>{
+    socket.on("eliminar-turno", (turno)=>{
         let indexTurno = listOfUsers.findIndex(x=>x.id===turno.id);
-        listOfUsers.splice(indexTurno, 1, turno)
+        listOfUsers.splice(indexTurno, 1)
         io.emit("data-turnos", listOfUsers)
     });
 
     socket.on("reiniciar", (vacio) =>{
         listOfUsers = vacio;
-        io.emit("data-turnos", listOfUsers)
+        io.emit("data-turnos", listOfUsers);
     });
 });
 
