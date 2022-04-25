@@ -13,13 +13,13 @@ const APP_VUE = {
       nombre: initName,
       correo: initMail,
       cerrado: false,
-      turno: this.tareas.length + 1,
+      turno: Math.floor(Math.random() * (999 - 100)) + 100,
+      id: Math.floor(Math.random() * (999 - 100)) + 100,
     };
 
     this.socket.emit("agregar-turno", user);
 
-    this.socket.on("bienvenido", (data) => {
-
+    this.socket.on("data-turnos", (data) => {
       this.tareas = data;
     });
   },
@@ -37,21 +37,25 @@ const APP_VUE = {
 
   // Metodos de la aplicación
   methods: {
-    incrementarContador() {
-      this.contador++;
+    reiniciar(){
+        let arregloVacio = [];
+        this.socket.emit("reiniciar", arregloVacio);
     },
-
-    agregarTarea() {
+    actualizarTurno(turno){
+        console.log(turno);
+        this.socket.emit("actualizar-turno", turno);
+    },
+    agregarTurno() {
       const turno = {
         nombre: this.nombreTarea,
         correo: (this.nombreTarea += "@gmail.com"),
         cerrado: false,
-        turno: this.tareas.length + 1,
+        turno: Math.floor(Math.random() * (999 - 100)) + 100,
+        id: Math.floor(Math.random() * (999 - 100)) + 100,
       };
       this.socket.emit("agregar-turno", turno);
 
       this.nombreTarea = "";
-      this.incrementarContador();
     },
   },
 };

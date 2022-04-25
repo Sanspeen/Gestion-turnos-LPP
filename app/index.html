@@ -10,22 +10,21 @@
   <body>
     <div id="app">
       <h1>{{ titulo }}</h1>
-
-      Total de tareas: <b>{{contador}}</b>
-      <br>
-      <input type="text" v-model="nombreTarea" placeholder="Ingrese la tarea" />
       <br />
-      <br />
-      <button @click="agregarTarea">Agregar Tarea</button>
-
-      <h3>Tareas pendientes</h3>
+      <h3>LISTA DE TURNOS</h3>
       <div v-if="tareas.length==0">Sin tareas pendientes</div>
       <ul v-else>
         <li v-for="tarea in tareas">
           
-          <h3>Nombre: {{tarea.nombre}} | Correo: {{tarea.correo}} | Turno: {{tarea.turno}} <input type="checkbox" v-model="tarea.cerrado"/></h3>
+          <h3>Nombre: {{tarea.nombre}} | Correo: {{tarea.correo}} | Turno: {{tarea.turno}} <input type="checkbox" v-model="tarea.cerrado" @change="actualizarTurno(tarea)"/></h3>
         </li>
       </ul>
+      <input type="text" v-model="nombreTarea" placeholder="Ingrese la tarea" />
+      <br>
+      <br />
+      <button @click="agregarTurno">Agregar Tarea</button>
+      <button @click="eliminarTurno">Eliminar</button>
+      <button @click="reiniciar" >Reset</button>
     </div>
     <script src="https://unpkg.com/vue@3"></script>
     <script type="module" src="index.js"></script>

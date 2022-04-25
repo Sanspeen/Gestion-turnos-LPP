@@ -19,26 +19,29 @@ app.get("/",(req, res) =>{
 });
 
 
-listOfUsers = [
-    {
-        nombre: "Santiago",
-        correo: "Franco@gmail.com",
-        cerrado: false,
-        turno: 1
-    }
-];
+listOfUsers = [];
 
+//Listeners
 io.on('connection', (socket) => {
     console.log("User connected: ", socket.id);
-    socket.emit("bienvenido", listOfUsers)
+    socket.emit("data-turnos", listOfUsers)
 
     socket.on("agregar-turno", (data) => {
         listOfUsers.push(data);
-        io.emit("bienvenido", listOfUsers)
+        io.emit("data-turnos", listOfUsers)
     })
+
+    socket.on("actualizar-turno", (turno)=>{
+        let indexTurno = listOfUsers.findIndex(x=>x.id===turno.id);
+        listOfUsers.splice(indexTurno, 1, turno)
+        io.emit("data-turnos", listOfUsers)
+    });
+
+    socket.on("reiniciar", (vacio) =>{
+        listOfUsers = vacio;
+        io.emit("data-turnos", listOfUsers)
+    });
 });
-
-
 
 server.listen(3000, () => {
     console.log("Server on port: 3000");
