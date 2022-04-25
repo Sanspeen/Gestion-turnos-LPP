@@ -2,27 +2,27 @@ import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 
 const url_socket = "http://localhost:3000";
 
-
 const APP_VUE = {
+  beforeMount() {
+    this.socket = io(url_socket);
+    //Falta añadir validacion para que no pase sin ingresar nada.
+    const initName = prompt("Ingrese su nombre por favor.");
+    const initMail = prompt("Ingrese su correo electronico por favor.");
 
-    beforeMount(){
+    const user = {
+      nombre: initName,
+      correo: initMail,
+      cerrado: false,
+      turno: this.tareas.length + 1,
+    };
 
-        this.socket = io(url_socket);
-        
-        this.socket.on("bienvenido", (data) => {
-            //Falta añadir validacion para que no pase sin ingresar nada.
-            const initName = prompt("Ingrese su nombre por favor.");
-            const initMail = prompt("Ingrese su correo electronico por favor.") 
-            
-            const user = {
-                nombre: initName,
-                correo: initMail,
-                turno: this.tareas.length + 1
-            }
+    this.socket.emit("agregar-turno", user);
 
-            this.tareas.push(user);
-        });
-    },
+    this.socket.on("bienvenido", (data) => {
+
+      this.tareas = data;
+    });
+  },
 
   // DATA: Estado de la información
   data() {
@@ -31,7 +31,7 @@ const APP_VUE = {
       contador: 0,
       tareas: [],
       nombreTarea: "",
-      socket:null
+      socket: null,
     };
   },
 
@@ -42,7 +42,14 @@ const APP_VUE = {
     },
 
     agregarTarea() {
-      this.tareas.push(this.nombreTarea);
+      const turno = {
+        nombre: this.nombreTarea,
+        correo: (this.nombreTarea += "@gmail.com"),
+        cerrado: false,
+        turno: this.tareas.length + 1,
+      };
+      this.socket.emit("agregar-turno", turno);
+
       this.nombreTarea = "";
       this.incrementarContador();
     },

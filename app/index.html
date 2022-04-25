@@ -22,8 +22,8 @@
       <div v-if="tareas.length==0">Sin tareas pendientes</div>
       <ul v-else>
         <li v-for="tarea in tareas">
-          <input type="checkbox" name="" id="" />
-          {{tarea}}
+          
+          <h3>Nombre: {{tarea.nombre}} | Correo: {{tarea.correo}} | Turno: {{tarea.turno}} <input type="checkbox" v-model="tarea.cerrado"/></h3>
         </li>
       </ul>
     </div>

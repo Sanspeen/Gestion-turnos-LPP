@@ -23,6 +23,7 @@ listOfUsers = [
     {
         nombre: "Santiago",
         correo: "Franco@gmail.com",
+        cerrado: false,
         turno: 1
     }
 ];
@@ -30,6 +31,11 @@ listOfUsers = [
 io.on('connection', (socket) => {
     console.log("User connected: ", socket.id);
     socket.emit("bienvenido", listOfUsers)
+
+    socket.on("agregar-turno", (data) => {
+        listOfUsers.push(data);
+        io.emit("bienvenido", listOfUsers)
+    })
 });
 
 
