@@ -15,6 +15,7 @@ const APP_VUE = {
   data() {
     return {
       titulo: "GESTION DE TURNOS",
+      email: "",
       contador: 0,
       tareas: [],
       nombreTarea: "",
@@ -35,7 +36,7 @@ const APP_VUE = {
     agregarTurno() {
       const turno = {
         nombre: this.nombreTarea,
-        correo: (this.nombreTarea += "@gmail.com"),
+        correo: this.email,
         cerrado: false,
         turno: Math.floor(Math.random() * (999 - 100)) + 100,
         id: Math.floor(Math.random() * (999 - 100)) + 100,
@@ -43,6 +44,7 @@ const APP_VUE = {
       this.socket.emit("agregar-turno", turno);
 
       this.nombreTarea = "";
+      this.email = "";
     },
   },
 };
