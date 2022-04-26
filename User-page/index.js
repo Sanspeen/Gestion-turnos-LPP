@@ -6,7 +6,6 @@ const APP_VUE = {
   beforeMount() {
     this.socket = io(url_socket);
 
-
     this.socket.on("data-turnos", (data) => {
       this.tareas = data;
     });
